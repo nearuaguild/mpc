@@ -72,6 +72,7 @@ pub struct MpcContract {
 
 impl MpcContract {
     fn add_request(&mut self, request: &SignatureRequest, data_id: CryptoHash) {
+        log!("Pending request: {:?}", &request);
         if self
             .pending_requests
             .insert(request, &YieldIndex { data_id })
