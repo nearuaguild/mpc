@@ -260,19 +260,6 @@ impl VersionedMpcContract {
             let expected_public_key =
                 derive_key(near_public_key_to_affine_point(pk), request.epsilon.scalar);
 
-            // Check the signature is correct
-            if check_ec_signature(
-                &expected_public_key,
-                &response.big_r.affine_point,
-                &response.s.scalar,
-                request.payload_hash.scalar,
-                response.recovery_id,
-            )
-            .is_err()
-            {
-                return Err(RespondError::InvalidSignature.into());
-            }
-
             match self {
                 Self::V0(mpc_contract) => {
                     if let Some(YieldIndex { data_id }) =
